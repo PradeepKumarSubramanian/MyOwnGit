@@ -496,7 +496,29 @@ public class GenericWrappers extends Reporter implements Wrappers {
 		}
 		return number;
 	}
+	
+	public void verifyTextByClassName(String ClassName, String text) {
+		try {
+			String actualText = driver.findElementByClassName(ClassName).getText();
+			if (actualText.equals(text)) {
+				System.out.println("The verification is Success");
+			} else {
+				System.out.println("The verification is fail");
+			}
+		} catch (NoSuchElementException e) {
+			System.out.println("The element with className value: " + ClassName + " doesnt exists " + e.getMessage());
+			throw new RuntimeException("FAILED");
+		} catch (WebDriverException e) {
+			System.out.println("Unfortunately the browser did not open " + e.getMessage());
+			throw new RuntimeException("FAILED");
+		} catch (Exception e) {
+			System.out.println("Unexpected exception occured in verifying Text " + e.getMessage());
+			throw new RuntimeException("FAILED");
 
+		} finally {
+			takeSnap();
+		}
+	}
 
 
 }

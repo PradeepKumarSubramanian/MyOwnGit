@@ -15,30 +15,34 @@ public class ViewLeadPage extends OpentapsWrappers {
 			reportStep("This is not View Lead Page. Look at the SnapShot", "FAIL");
 		}
 	}
-
-
+	public EditLeadPage clickEdit()
+	{
+		clickByXpath(prop.getProperty("ViewLead.Edit.Xpath"));
+		return new EditLeadPage(driver, test);
+	}
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public MyLeadsPage clickDelete()
+	{
+		clickByClassName(prop.getProperty("ViewLead.Delete.ClassName"));
+		return new MyLeadsPage(driver, test);
+		
+	}
+	
+	public ViewLeadPage verifyFirstName(String firstName)
+	{
+		verifyTextById(prop.getProperty("ViewLead.FirstName.Id"), firstName);
+		return this;
+	}
+	
+	public ViewLeadPage verifySource(String source)
+	{
+		verifyTextById(prop.getProperty("ViewLead.Sources.Id"), source);
+		return this;
+	}
+	
+	public ViewLeadPage verifyMarketCompaign(String marketCompaign)
+	{
+		verifyTextById(prop.getProperty("ViewLead.MarketCompaigns.Id"), marketCompaign);
+		return this;
+	}
 }

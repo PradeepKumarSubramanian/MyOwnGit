@@ -173,6 +173,8 @@ public interface Wrappers {
 		 * @author Babu - TestLeaf
 		 */
 		public void quitBrowser();
+
+		public void verifyTextByClassName(String ClassName, String text);
 		
 
 }

@@ -38,27 +38,16 @@ public class CreateLeadPage extends OpentapsWrappers {
 	}
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public CreateLeadPage selectIndustry(String indexValue)
+	{
+		selectIndexById(prop.getProperty("CreateLead.Industry.Id"), indexValue);
+		return this;
+	}
+	
+	public CreateLeadPage seleOwnerShip(String indexValue)
+	{
+		selectIndexById(prop.getProperty("CreateLead.OwnerShip.Id"), indexValue);
+		return this;
+	}
 
 }
