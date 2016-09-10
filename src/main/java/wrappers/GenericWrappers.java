@@ -13,15 +13,20 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import utils.Reporter;
 
 public class GenericWrappers extends Reporter implements Wrappers {
@@ -29,6 +34,7 @@ public class GenericWrappers extends Reporter implements Wrappers {
 	public RemoteWebDriver driver;
 	protected static Properties prop;
 	public String sUrl,primaryWindowHandle,sHubUrl,sHubPort;
+	WebDriverWait wait;
 
 	public GenericWrappers() {
 		Properties prop = new Properties();
@@ -93,7 +99,9 @@ public class GenericWrappers extends Reporter implements Wrappers {
 			else{ // this is for local run
 				if(browser.equalsIgnoreCase("chrome")){
 					System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
-					driver = new ChromeDriver();
+					ChromeOptions options = new ChromeOptions();
+					options.addArguments("--disable-extensions");
+					driver = new ChromeDriver(options);
 				}else
 					driver = new FirefoxDriver();
 			}
@@ -101,7 +109,7 @@ public class GenericWrappers extends Reporter implements Wrappers {
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			driver.get(sUrl);
-
+			wait = new WebDriverWait(driver, 50);
 			primaryWindowHandle = driver.getWindowHandle();		
 			reportStep("The browser:" + browser + " launched successfully", "PASS");
 
@@ -471,6 +479,29 @@ public class GenericWrappers extends Reporter implements Wrappers {
 			}
 		} catch (Exception e) {
 			reportStep("The window could not be switched to the last window.", "FAIL");
+		}
+	}
+	public void switchToLastWindow(int totalWindowExpected) {
+		try {
+			//wait.until(ExpectedConditions.numberOfWindowsToBe(totalWindowExpected));
+			Set<String> windowhandleSet = driver.getWindowHandles();
+			System.out.println("count of opened windows :" + windowhandleSet.size());
+			for (String windowhandle : windowhandleSet) {
+				// System.out.println("navigating windows :" + windowhandle);
+				driver.switchTo().window(windowhandle);
+			}
+			System.out.println("control is switched to last window");
+		} catch (NoSuchWindowException e) {
+			System.out.println("Exception occured while switching window  " + e.getMessage());
+			throw new RuntimeException("FAILED");
+		} catch (WebDriverException e) {
+			System.out.println("The Browser could not be found " + e.getMessage());
+			throw new RuntimeException("FAILED");
+		} catch (Exception e) {
+			System.out.println("Unexpected exception in switching to Last Window:" + e.getMessage());
+			throw new RuntimeException("FAILED");
+		} finally {
+			takeSnap();
 		}
 	}
 

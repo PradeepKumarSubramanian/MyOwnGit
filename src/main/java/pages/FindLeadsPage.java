@@ -32,13 +32,24 @@ public class FindLeadsPage extends OpentapsWrappers{
 		return this;
 	}
 	
+	public FindLeadsPage clickEmailTab()
+	{
+		clickByXpath(prop.getProperty("FindLead.EmailTab.Xpath"));
+		return this;
+	}
+	
 	public FindLeadsPage enterPhoneNumber(String phoneNo)
 	{
 		enterByName(prop.getProperty("FindLead.PhoneNumber.Name"), phoneNo);
 		return this;
 	}
 	
-	
+	public FindLeadsPage enterEmailAddress(String emailId)
+	{
+		enterByName(prop.getProperty("FindLead.EmailAddress.Name"), emailId);
+		return this;
+	}
+
 	public ViewLeadPage clickFirstResultingLead() {
 		clickByXpath(prop.getProperty("FindLead.FirstResultLead.Xpath"));
 		return new  ViewLeadPage(driver, test);		

@@ -18,12 +18,14 @@ public class MergeLeadsPage extends OpentapsWrappers{
 	public FindMergeLeadsPage clickFromLead()
 	{
 		clickByXpath(prop.getProperty("MergeLead.FromLead.Xpath"));
+		switchToLastWindow(2);
 		return new FindMergeLeadsPage(driver, test);
 	}
 	
 	public FindMergeLeadsPage clickToLead()
 	{
 		clickByXpath(prop.getProperty("MergeLead.ToLead.Xpath"));
+		switchToLastWindow(2);
 		return new FindMergeLeadsPage(driver, test);
 	}
 	

@@ -15,12 +15,17 @@ public class FindMergeLeadsPage extends OpentapsWrappers{
 			reportStep("This is not Find Merge Leads Page", "FAIL");
 	}
 	
-	public FindMergeLeadsPage enterFirstName(String data) {
-		enterByXpath(prop.getProperty("FindMergeLead.FirstName.Xpath"), data);
+	public FindMergeLeadsPage enterFirstName(String firstName) {
+		enterByXpath(prop.getProperty("FindMergeLead.FirstName.Xpath"), firstName);
 		return this;
 
 	}
 	
+	public FindMergeLeadsPage enterLeadId(String leadId) {
+		enterByXpath(prop.getProperty("FindMergeLead.LeadId.Xpath"), leadId);
+		return this;
+
+	}
 	public FindMergeLeadsPage clickFindLeads() {
 		clickByXpath(prop.getProperty("FindMergeLead.FindLeads.Xpath"));
 		return this;		
@@ -28,6 +33,7 @@ public class FindMergeLeadsPage extends OpentapsWrappers{
 	
 	public MergeLeadsPage clickFirstResultingLead() {
 		clickByXpath(prop.getProperty("FindMergeLead.FirstResultLead.Xpath"));
+		switchToParentWindow();
 		return new  MergeLeadsPage(driver, test);		
 	}
 }

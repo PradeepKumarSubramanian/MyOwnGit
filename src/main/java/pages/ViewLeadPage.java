@@ -28,6 +28,13 @@ public class ViewLeadPage extends OpentapsWrappers {
 		
 	}
 	
+	public DuplicateLeadPage clickDuplicate()
+	{
+		clickByXpath(prop.getProperty("ViewLead.Dupliacte.Xpath"));
+		return new DuplicateLeadPage(driver, test);
+
+	}
+	
 	public ViewLeadPage verifyFirstName(String firstName)
 	{
 		verifyTextById(prop.getProperty("ViewLead.FirstName.Id"), firstName);

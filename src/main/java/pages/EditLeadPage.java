@@ -11,8 +11,8 @@ public class EditLeadPage extends OpentapsWrappers{
 	public EditLeadPage(RemoteWebDriver driver, ExtentTest test){
 		this.driver = driver; 
 		this.test = test;
-		if(!verifyTitle("Edit Lead | opentaps CRM")){
-			reportStep("This is not View Lead Page. Look at the SnapShot", "FAIL");
+		if(!verifyTitle("opentaps CRM")){
+			reportStep("This is not Edit Lead Page. Look at the SnapShot", "FAIL");
 		}
 	}
 	
